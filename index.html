@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Special Invitation</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins;
+}
+
+/* BACKGROUND IMAGE AREA */
+
+body{
+height:100vh;
+
+/* PUT YOUR BACKGROUND IMAGE NAME HERE */
+background:
+linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
+url("ramlala.jpg");
+
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+
+display:flex;
+justify-content:center;
+align-items:center;
+color:white;
+overflow:hidden;
+text-align:center;
+}
+
+/* LOTUS PARTICLES */
+
+.lotus{
+position:absolute;
+font-size:22px;
+animation:floatLotus linear infinite;
+opacity:0.7;
+}
+
+@keyframes floatLotus{
+0%{transform:translateY(100vh) rotate(0deg);}
+100%{transform:translateY(-100vh) rotate(360deg);}
+}
+
+/* SCROLL OPENING */
+
+.scroll{
+width:80%;
+max-width:850px;
+background:rgba(255,255,255,0.08);
+border-radius:20px;
+padding:40px;
+border:1px solid gold;
+box-shadow:0 0 40px rgba(255,215,0,0.3);
+animation:scrollOpen 2s ease;
+}
+
+@keyframes scrollOpen{
+0%{transform:scaleY(0);opacity:0;}
+100%{transform:scaleY(1);opacity:1;}
+}
+
+.title{
+font-family:Cinzel;
+font-size:42px;
+color:gold;
+margin-bottom:25px;
+text-shadow:0 0 15px gold;
+}
+
+/* IMAGE CIRCLE */
+
+.temple{
+width:250px;
+height:250px;
+margin:auto;
+border-radius:50%;
+overflow:hidden;
+border:5px solid gold;
+box-shadow:0 0 30px gold;
+}
+
+.temple img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+/* TYPEWRITER */
+
+#typeText{
+margin-top:25px;
+font-size:17px;
+line-height:1.8;
+min-height:120px;
+}
+
+/* DIYA */
+
+.diya{
+font-size:35px;
+margin-top:20px;
+animation:flicker 0.15s infinite alternate;
+}
+
+@keyframes flicker{
+from{transform:scale(1);}
+to{transform:scale(1.15);}
+}
+
+/* BUTTONS */
+
+.buttons{
+margin-top:25px;
+}
+
+button{
+padding:12px 25px;
+margin:10px;
+border:none;
+border-radius:30px;
+font-size:16px;
+cursor:pointer;
+}
+
+.accept{
+background:linear-gradient(45deg,gold,#ffcc00);
+color:black;
+}
+
+.decline{
+background:transparent;
+border:1px solid white;
+color:white;
+}
+
+/* POPUP */
+
+.popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.7);
+display:none;
+justify-content:center;
+align-items:center;
+}
+
+.popup-box{
+background:white;
+color:black;
+padding:40px;
+border-radius:15px;
+font-size:20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="lotusContainer"></div>
+
+<div class="scroll">
+
+<div class="title">Special Invitation</div>
+
+<div class="temple">
+<img id="mainImage" src="mcu.jpg">
+</div>
+
+<br>
+
+<input type="file" id="uploadImage">
+
+<div id="typeText"></div>
+
+<div class="diya">🪔</div>
+
+<div class="buttons">
+<button class="accept" onclick="acceptInvite()">Accept</button>
+<button class="decline" onclick="declineInvite()">Decline</button>
+</div>
+
+</div>
+
+<div class="popup" id="popup">
+<div class="popup-box" id="popupText"></div>
+</div>
+
+<script>
+
+/* TYPEWRITER TEXT */
+
+const text =
+`Dear Faculty and Department,
+
+We are delighted to invite you to the inaugural launch of our magazine
+"Indian Kaleidoscope".
+
+Theme:
+Unfolding the Patterns of Temple Economies in India.
+
+Your gracious presence will make this occasion special.`;
+
+let i=0;
+
+function typeWriter(){
+
+if(i < text.length){
+document.getElementById("typeText").innerHTML += text.charAt(i);
+i++;
+setTimeout(typeWriter,35);
+}
+
+}
+
+typeWriter();
+
+/* LOTUS PARTICLES */
+
+function createLotus(){
+
+let lotus=document.createElement("div");
+
+lotus.className="lotus";
+lotus.innerHTML="🌸";
+
+lotus.style.left=Math.random()*100+"%";
+lotus.style.animationDuration=(Math.random()*10+8)+"s";
+
+document.body.appendChild(lotus);
+
+setTimeout(()=>lotus.remove(),15000);
+
+}
+
+setInterval(createLotus,800);
+
+/* IMAGE UPLOAD */
+
+document.getElementById("uploadImage").addEventListener("change",function(){
+
+let reader=new FileReader();
+
+reader.onload=function(e){
+document.getElementById("mainImage").src=e.target.result;
+}
+
+reader.readAsDataURL(this.files[0]);
+
+});
+
+/* POPUPS */
+
+function acceptInvite(){
+document.getElementById("popup").style.display="flex";
+document.getElementById("popupText").innerHTML=
+"Thank you for accepting the invitation!";
+}
+
+function declineInvite(){
+document.getElementById("popup").style.display="flex";
+document.getElementById("popupText").innerHTML=
+"We will miss your presence.";
+}
+
+</script>
+
+</body>
+</html>
